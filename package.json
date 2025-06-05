@@ -1,0 +1,28 @@
+{
+  "name": "careerfm",
+  "version": "0.0.1",
+  "description": "Career.fm - 音声名刺プラットフォーム",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "infrastructure"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=packages/frontend",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "deploy:dev": "cd infrastructure && cdk deploy --all --profile careerfm-dev",
+    "deploy:staging": "cd infrastructure && cdk deploy --all --profile careerfm-staging",
+    "deploy:prod": "cd infrastructure && cdk deploy --all --profile careerfm-prod",
+    "cdk": "cd infrastructure && cdk"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
