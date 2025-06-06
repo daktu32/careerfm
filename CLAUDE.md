@@ -88,3 +88,88 @@ AIエージェントは、以下のファイルを常に最新の状態に保つ
 2. 具体的な成果物や変更内容を記載
 3. 次のステップを明確にする
 4. コミットメッセージに進捗更新を含める旨を記載
+
+## プロジェクト固有開発ルール
+
+### Git ワークフロー
+
+#### ブランチ戦略
+- **メインブランチ**: `main`
+- **フィーチャーブランチ**: `feature/task-description`
+- **バグ修正ブランチ**: `fix/bug-description`
+
+#### 必須作業手順
+すべての開発作業において以下の手順を厳守：
+
+1. 機能要件を定義し、`docs/specs/`に記載
+2. **作業ブランチを作成し、git worktreeで分離**
+3. 期待される入出力に基づきテストを作成
+4. テストを実行し、失敗を確認
+5. テストをパスさせる実装を進める
+6. すべてのテストが通過したらリファクタリング
+7. 進捗ファイル（PROGRESS.md、DEVELOPMENT_ROADMAP.md）を更新
+
+#### Worktree運用
+```bash
+# 必須手順
+git checkout main && git pull origin main
+git checkout -b feature/task-name
+git worktree add ../careerfm-feature ./feature/task-name
+```
+
+### モジュール構成
+
+- `packages/web/`: Next.js frontend application
+- `packages/api/`: AWS Lambda functions
+- `packages/shared/`: Shared types and utilities
+- `infrastructure/`: AWS CDK infrastructure code
+
+### コーディング規約
+
+#### ファイル命名規則
+- **React コンポーネント**: `PascalCase.tsx`
+- **API ハンドラー**: `kebab-case.ts`
+- **テストファイル**: `*.test.ts(x)` または `*.spec.ts(x)`
+- **型定義**: `camelCase.types.ts`
+
+####品質チェック項目
+実装完了前に以下を確認：
+- `npm run type-check` (TypeScript validation)
+- `npm run lint` (ESLint + Prettier)
+- `npm run test` (Jest tests pass)
+- `npm run build` (Production build succeeds)
+
+### AWS統合ガイドライン
+
+#### 使用サービス
+- **Cognito**: ユーザー認証・認可
+- **DynamoDB**: ユーザーデータ・音声メタデータ
+- **S3**: 音声ファイルストレージ
+- **Lambda**: APIビジネスロジック
+- **CloudFront**: 静的コンテンツ配信
+
+#### セキュリティ原則
+- IAM最小権限の原則
+- AWS Secrets Manager使用
+- 適切なCORS設定
+- すべての通信をHTTPS化
+
+### 禁止事項
+
+以下の行為は厳格に禁止：
+- テストなしでの実装
+- mainブランチでの直接作業
+- worktreeを使わない作業
+- 秘密情報のハードコーディング
+- 既存のAPIインターフェースの破壊的変更
+- 承認なしでの新規外部依存の追加
+- PROGRESS.mdとDEVELOPMENT_ROADMAP.mdの更新を怠る
+
+### 実装後の必須タスク
+- すべてのテストが通過することを確認
+- 型チェックとlintが通過することを確認
+- 必要に応じてドキュメントを更新
+- PROGRESS.mdを更新し、完了タスクと次のタスクを記録
+- DEVELOPMENT_ROADMAP.mdの進捗状況を更新
+- 変更内容を適切にコミット
+- Pull Requestを作成
