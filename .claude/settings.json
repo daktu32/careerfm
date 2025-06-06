@@ -10,11 +10,23 @@
     "workflow": "test-driven-development",
     "process": [
       "1. 機能要件を定義し、docs/specs/に記載",
-      "2. 期待される入出力に基づきテストを作成", 
-      "3. テストを実行し、失敗を確認",
-      "4. テストをパスさせる実装を進める",
-      "5. すべてのテストが通過したらリファクタリング"
+      "2. 作業ブランチを作成し、git worktreeで分離", 
+      "3. 期待される入出力に基づきテストを作成",
+      "4. テストを実行し、失敗を確認",
+      "5. テストをパスさせる実装を進める",
+      "6. すべてのテストが通過したらリファクタリング",
+      "7. 進捗ファイル（PROGRESS.md、DEVELOPMENT_ROADMAP.md）を更新"
     ],
+    "git_workflow": {
+      "branch_strategy": "feature branches from main",
+      "naming_convention": "feature/task-description または fix/bug-description",
+      "worktree_usage": "修正着手前に必ずworktreeで作業ブランチを作成",
+      "pre_work_checklist": [
+        "git checkout main && git pull origin main",
+        "git checkout -b feature/task-name",
+        "git worktree add ../careerfm-feature ./feature/task-name"
+      ]
+    },
     "standards": {
       "typescript": "strict mode, no any types",
       "testing": "Jest + React Testing Library, TDD approach",
@@ -70,6 +82,7 @@
     "before_implementation": [
       "CLAUDE.mdの内容を確認し、プロジェクト哲学を理解",
       "既存のコードパターンを確認",
+      "作業ブランチを作成し、git worktreeで分離環境を構築",
       "TDDアプローチに従い、まずテストを作成",
       "AWSコスト最適化を考慮"
     ],
@@ -85,10 +98,13 @@
       "必要に応じてドキュメントを更新",
       "PROGRESS.mdを更新し、完了タスクと次のタスクを記録",
       "DEVELOPMENT_ROADMAP.mdの進捗状況を更新",
-      "変更内容を適切にコミット"
+      "変更内容を適切にコミット",
+      "Pull Requestを作成"
     ],
     "prohibited_actions": [
       "テストなしでの実装",
+      "mainブランチでの直接作業",
+      "worktreeを使わない作業",
       "秘密情報のハードコーディング",
       "既存のAPIインターフェースの破壊的変更",
       "承認なしでの新規外部依存の追加",
@@ -128,17 +144,20 @@
   "common_tasks": {
     "add_new_feature": {
       "process": "TDD開発プロセスに従う",
+      "git_setup": "feature/task-name ブランチとworktreeを作成",
       "frontend": "コンポーネント作成 → テスト → Storybook",
       "backend": "Lambda関数作成 → ユニットテスト → 統合テスト",
       "documentation": "実装後、PROGRESS.mdに記録"
     },
     "modify_existing_feature": {
       "approach": "既存テストを確認し、必要に応じて更新",
+      "git_setup": "fix/bug-name または feature/enhancement-name ブランチを作成",
       "testing": "回帰テストの実行",
       "documentation": "変更内容をドキュメントに反映"
     },
     "fix_bugs": {
       "diagnosis": "再現テストを先に作成",
+      "git_setup": "fix/bug-description ブランチとworktreeを作成",
       "approach": "根本原因の分析後に修正",
       "validation": "修正が他の機能に影響しないことを確認"
     }
@@ -166,4 +185,4 @@
     "e2e_tests": "Critical user journeys with Playwright",
     "manual_testing": "ローカル開発環境での動作確認"
   }
-} 
+}
