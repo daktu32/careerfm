@@ -12,9 +12,9 @@
     "build": "npm run build --workspaces --if-present",
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
-    "deploy:dev": "cd infrastructure && cdk deploy --all --profile careerfm-dev",
-    "deploy:staging": "cd infrastructure && cdk deploy --all --profile careerfm-staging",
-    "deploy:prod": "cd infrastructure && cdk deploy --all --profile careerfm-prod",
+    "deploy:dev": "cd infrastructure && cdk deploy --all --profile AdministratorAccess-875551125050",
+    "deploy:staging": "cd infrastructure && cdk deploy --all --profile AdministratorAccess-875551125050",
+    "deploy:prod": "cd infrastructure && cdk deploy --all --profile AdministratorAccess-875551125050",
     "cdk": "cd infrastructure && cdk"
   },
   "devDependencies": {

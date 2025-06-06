@@ -74,7 +74,7 @@ Career.fm は、他己紹介風の「音声名刺」を手軽に生成・共有�
 
 - HTTPS 強制  
 - 認証トークンの JWT 化・有効期限管理  
-- 音声ファイルへの不正アクセス防止（Storage Rules）  
+- 音声ファイルへの不正アクセス防止（S3 Bucket Policy + IAM）  
 
 ### 4.4 拡張性
 
@@ -83,8 +83,8 @@ Career.fm は、他己紹介風の「音声名刺」を手軽に生成・共有�
 
 ### 4.5 運用・保守
 
-- ログ集約（Cloud Logging）  
-- モニタリング（Cloud Monitoring、Sentry 等）  
+- ログ集約（CloudWatch Logs）  
+- モニタリング（CloudWatch Metrics、X-Ray）  
 - バックアップ／リストア手順定義  
 
 ## 5. 技術構成
@@ -92,10 +92,13 @@ Career.fm は、他己紹介風の「音声名刺」を手軽に生成・共有�
 | 層             | 技術スタック                             |
 |---------------|---------------------------------------|
 | フロントエンド   | Next.js + TypeScript + TailwindCSS         |
-| バックエンド     | Firebase Authentication / Firestore / Cloud Functions または Supabase |
-| オブジェクトストレージ | Google Cloud Storage                     |
+| バックエンド     | AWS Lambda + API Gateway                   |
+| 認証           | Amazon Cognito                             |
+| データベース     | Amazon DynamoDB                            |
+| オブジェクトストレージ | Amazon S3                                  |
+| CDN            | Amazon CloudFront                          |
 | 再生コンポーネント  | HTML5 Audio Player                       |
-| CI/CD          | GitHub Actions                           |
+| CI/CD          | GitHub Actions + AWS CDK                   |
 
 ## 6. 外部連携・インターフェース
 
@@ -105,11 +108,12 @@ Career.fm は、他己紹介風の「音声名刺」を手軽に生成・共有�
 
 ### 6.2 ストレージ連携
 
-- Firebase Storage もしくは Supabase Storage の REST API  
+- Amazon S3 Presigned URL でのアップロード  
+- CloudFront 経由でのダウンロード  
 
 ### 6.3 メール送信
 
-- 認証メール・パスワードリセット：SendGrid など  
+- 認証メール・パスワードリセット：Amazon SES または Cognito 統合  
 
 ## 7. 制約／リスク
 

@@ -54,8 +54,10 @@ Career.fm（キャリア・エフエム）
 ## 8. 技術的構成（案）
 
 * フロント：Next.js + TailwindCSS
-* バックエンド：Firebase / Supabase
-* 音声ホスティング：Cloud Storage
+* バックエンド：AWS (Lambda + API Gateway + DynamoDB)
+* 認証：Amazon Cognito
+* 音声ホスティング：Amazon S3
+* 配信：CloudFront CDN
 * 再生：HTML5 Audio Player
 
 ## 9. 法的・倫理的対応

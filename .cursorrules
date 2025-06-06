@@ -1,0 +1,172 @@
+# Career.fm Development Rules
+
+## 🎯 Project Context
+Career.fm は音声名刺を生成・共有できる Webサービスです。
+AWS サーバーレスアーキテクチャ（Lambda + API Gateway + DynamoDB）で構築されています。
+
+## 📋 Development Workflow
+
+### 新機能追加の手順
+1. **仕様書作成**: `docs/specs/F-XX-feature-name.md` に機能仕様を先に作成
+2. **TDDテスト**: テストを先に作成（Jest/React Testing Library）
+3. **CDK更新**: 必要に応じて `infrastructure/lib/stacks/` を更新
+4. **Lambda実装**: `packages/backend/src/functions/` に実装
+5. **Frontend実装**: `packages/frontend/src/` に実装
+6. **型定義**: 共通型は `types/` に追加
+
+### ファイル命名規則
+- 機能仕様書: `F-XX-kebab-case-name.md`
+- Lambda関数: `kebab-case-name.ts`
+- React コンポーネント: `PascalCase.tsx`
+- テストファイル: `*.test.ts` or `*.test.tsx`
+
+## 🛠️ Implementation Standards
+
+### TypeScript Rules
+- 厳密な型安全性を維持
+- `any` 型の使用禁止
+- 非同期処理は async/await を使用
+- エラーハンドリングは必須
+
+### AWS Lambda Design Patterns
+- Cold Start を考慮した実装
+- DynamoDBClient は関数外で初期化
+- 環境変数の検証を起動時に実施
+- Structured Logging (JSON形式)
+
+### Frontend Design Patterns
+- Next.js App Router を使用
+- Server Components を優先
+- Client Components は必要最小限
+- TailwindCSS でスタイリング
+
+### API Design
+- RESTful 原則に従う
+- JWT 認証（Cognito）
+- エラーレスポンスは統一フォーマット
+- CORS 設定は API Gateway で管理
+
+## 🧪 Testing Requirements
+
+### TDD Approach
+- 実装前にテストを書く
+- Red → Green → Refactor サイクル
+- カバレッジ目標: 80%以上
+
+### Test Categories
+- **Unit Tests**: Jest（Lambda, Components）
+- **Integration Tests**: API Gateway + Lambda
+- **E2E Tests**: Playwright（ユーザーフロー）
+- **CDK Tests**: CDK assertions
+
+### Test Data
+- テストフィクスチャは `tests/fixtures/` に配置
+- DynamoDB Local でのテスト環境
+- S3 Mock（LocalStack）活用
+
+## 📝 Documentation Rules
+
+### Code Comments
+- 複雑なロジックには日本語コメントを追加
+- 関数/クラスには JSDoc コメントを記述
+- Lambda 関数には処理概要を明記
+
+### Architecture Updates
+- 機能変更時は `docs/ARCHITECTURE.md` も更新
+- API 変更は OpenAPI 仕様も更新
+- CDK 変更は README に反映
+
+## 🚫 Prohibited Actions
+- AWS 認証情報のハードコード
+- DynamoDB Scan の無制限使用
+- S3 への直接アップロード（Presigned URL を使用）
+- 環境変数の直接参照（設定管理を通す）
+- package.json の dependencies を無断で変更しない
+
+## 🎯 Quality Standards
+
+### Code Quality
+- TypeScript コンパイルエラーゼロ
+- ESLint エラーゼロ
+- Prettier でフォーマット統一
+- 新機能は対応するテストケースでカバー
+
+### Performance Standards
+- Lambda 関数: メモリ 512MB 以下で動作
+- API レスポンス: 500ms 以下
+- Frontend: Lighthouse スコア 90以上
+
+### Security Standards
+- 認証必須エンドポイントの保護
+- S3 バケットは非公開設定
+- 機密情報は AWS Secrets Manager
+- 最小権限の原則（IAM）
+
+## 📦 Dependencies
+
+### Package Management
+- 新しい npm パッケージ追加前に必要性を検討
+- AWS SDK は v3 を使用
+- 軽量で信頼性の高いライブラリを優先
+- セキュリティ脆弱性チェック必須
+
+### AWS Services
+- 新サービス追加時はコスト影響を評価
+- 無料枠を最大限活用
+- リージョンは ap-northeast-1（東京）
+
+## 🔧 Build & Deploy
+
+### Local Development
+- `npm run dev` でフロントエンド開発
+- LocalStack で AWS サービスをエミュレート
+- 環境変数は `.env.local` で管理
+
+### Deployment Checklist
+- `npm run build` でエラーが出ないことを確認
+- `npm test` ですべてのテストが通ることを確認
+- `npx cdk diff` で変更内容を確認
+- `npx cdk deploy` で AWS にデプロイ
+
+### Environment Management
+- **dev**: 開発環境（個人アカウント）
+- **staging**: ステージング環境
+- **prod**: 本番環境（承認必要）
+
+## 🎵 Audio-Specific Guidelines
+
+### Audio File Handling
+- 対応形式: MP3, WAV, M4A
+- 最大サイズ: 10MB
+- S3 アップロードは Presigned URL 経由
+- メタデータ抽出と検証必須
+
+### Audio Player
+- HTML5 Audio API を使用
+- プログレッシブダウンロード対応
+- 再生エラーハンドリング
+- アクセシビリティ対応（キーボード操作）
+
+## 🚀 Performance Optimization
+
+### Frontend
+- 画像は Next.js Image で最適化
+- 音声ファイルは遅延読み込み
+- Critical CSS のインライン化
+
+### Backend
+- DynamoDB の適切なインデックス設計
+- Lambda のメモリサイズ最適化
+- CloudFront キャッシュ戦略
+
+## 📊 Monitoring & Logging
+
+### Application Monitoring
+- CloudWatch Logs で集約
+- X-Ray でトレーシング
+- カスタムメトリクスで KPI 追跡
+
+### Error Tracking
+- Lambda エラーは CloudWatch Alarms
+- Frontend エラーは CloudWatch RUM（将来）
+- 重要エラーは SNS 通知

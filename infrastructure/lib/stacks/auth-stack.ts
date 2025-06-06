@@ -85,35 +85,8 @@ export class AuthStack extends Stack {
       idTokenValidity: cdk.Duration.hours(1),
     });
 
-    // Identity Provider - X/Twitter
-    const twitterProvider = new cognito.UserPoolIdentityProviderOidc(this, 'TwitterProvider', {
-      userPool: this.userPool,
-      clientId: 'TWITTER_CLIENT_ID', // 実際の値は環境変数から取得
-      clientSecret: 'TWITTER_CLIENT_SECRET', // 実際の値は環境変数から取得
-      issuerUrl: 'https://twitter.com',
-      name: 'Twitter',
-      scopes: ['openid', 'email', 'profile'],
-      attributeMapping: {
-        email: cognito.ProviderAttribute.other('email'),
-        fullname: cognito.ProviderAttribute.other('name'),
-        profilePicture: cognito.ProviderAttribute.other('profile_image_url'),
-      },
-    });
-
-    // Identity Provider - GitHub
-    const githubProvider = new cognito.UserPoolIdentityProviderOidc(this, 'GitHubProvider', {
-      userPool: this.userPool,
-      clientId: 'GITHUB_CLIENT_ID', // 実際の値は環境変数から取得
-      clientSecret: 'GITHUB_CLIENT_SECRET', // 実際の値は環境変数から取得
-      issuerUrl: 'https://github.com',
-      name: 'GitHub',
-      scopes: ['openid', 'email', 'profile'],
-      attributeMapping: {
-        email: cognito.ProviderAttribute.other('email'),
-        fullname: cognito.ProviderAttribute.other('name'),
-        profilePicture: cognito.ProviderAttribute.other('avatar_url'),
-      },
-    });
+    // OAuth providers will be added later when we have real credentials
+    // For now, we'll deploy with basic email/password authentication
 
     // Outputs
     new cdk.CfnOutput(this, 'UserPoolId', {
