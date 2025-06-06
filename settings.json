@@ -1,0 +1,151 @@
+{
+  "project": {
+    "name": "Career.fm",
+    "description": "他己紹介風の音声名刺を生成・共有できるWebサービス。NotebookLMや自作音声を用いて「人となり」を伝える新しい音声プロフィール体験を提供。",
+    "type": "serverless-web-application",
+    "philosophy": "音声で伝える、あなたの「人となり」 - The voice tells your story."
+  },
+  
+  "development": {
+    "workflow": "test-driven-development",
+    "process": [
+      "1. 機能要件を定義し、docs/specs/に記載",
+      "2. 期待される入出力に基づきテストを作成", 
+      "3. テストを実行し、失敗を確認",
+      "4. テストをパスさせる実装を進める",
+      "5. すべてのテストが通過したらリファクタリング"
+    ],
+    "standards": {
+      "typescript": "strict mode, no any types",
+      "testing": "Jest + React Testing Library, TDD approach",
+      "frontend": "Next.js best practices, TailwindCSS utilities",
+      "backend": "AWS Lambda patterns, DynamoDB single-table design",
+      "infrastructure": "AWS CDK TypeScript, IaC principles"
+    }
+  },
+  
+  "architecture": {
+    "core_modules": {
+      "packages/web/": "Next.js frontend application",
+      "packages/api/": "AWS Lambda functions", 
+      "packages/shared/": "Shared types and utilities",
+      "infrastructure/": "AWS CDK infrastructure code"
+    },
+    "data_structure": {
+      "docs/": "Documentation and specifications",
+      "decisions/": "Architecture Decision Records (ADRs)",
+      "tests/": "E2E and integration tests",
+      ".github/workflows/": "CI/CD pipelines"
+    },
+    "patterns": {
+      "frontend": "Component-based architecture with hooks",
+      "api": "RESTful design with Lambda functions",
+      "state_management": "React Context + SWR for data fetching",
+      "authentication": "Amazon Cognito integration"
+    }
+  },
+  
+  "coding_guidelines": {
+    "file_naming": {
+      "components": "PascalCase.tsx",
+      "api": "kebab-case.ts", 
+      "tests": "*.test.ts(x) or *.spec.ts(x)",
+      "types": "camelCase.types.ts"
+    },
+    "code_style": {
+      "async": "Always use async/await",
+      "error_handling": "Comprehensive error boundaries and try/catch",
+      "comments": "日本語でのコメントOK、複雑なロジックには必須",
+      "imports": "Organized by external/internal/relative paths"
+    },
+    "quality_checks": [
+      "npm run type-check (TypeScript validation)",
+      "npm run lint (ESLint + Prettier)",
+      "npm run test (Jest tests pass)",
+      "npm run build (Production build succeeds)"
+    ]
+  },
+  
+  "ai_agent_instructions": {
+    "before_implementation": [
+      "CLAUDE.mdの内容を確認し、プロジェクト哲学を理解",
+      "既存のコードパターンを確認",
+      "TDDアプローチに従い、まずテストを作成",
+      "AWSコスト最適化を考慮"
+    ],
+    "during_implementation": [
+      "TypeScriptの厳格な型付けを維持",
+      "既存のデザインパターンに従う",
+      "セキュリティベストプラクティスを遵守",
+      "アクセシビリティ(a11y)に配慮"
+    ],
+    "after_implementation": [
+      "すべてのテストが通過することを確認",
+      "型チェックとlintが通過することを確認", 
+      "必要に応じてドキュメントを更新",
+      "変更内容を適切にコミット"
+    ],
+    "prohibited_actions": [
+      "テストなしでの実装",
+      "秘密情報のハードコーディング",
+      "既存のAPIインターフェースの破壊的変更",
+      "承認なしでの新規外部依存の追加"
+    ]
+  },
+  
+  "context_priorities": {
+    "always_reference": [
+      "CLAUDE.md - プロジェクト固有の指示",
+      "docs/ARCHITECTURE.md - システム設計",
+      "docs/prd.md - 製品要求仕様",
+      "infrastructure/README.md - インフラ構成"
+    ],
+    "frequently_reference": [
+      "docs/specs/ - 機能仕様",
+      "packages/web/components/ - UIコンポーネント",
+      "packages/api/handlers/ - APIハンドラー",
+      "infrastructure/lib/stacks/ - CDKスタック定義"
+    ]
+  },
+  
+  "common_tasks": {
+    "add_new_feature": {
+      "process": "TDD開発プロセスに従う",
+      "frontend": "コンポーネント作成 → テスト → Storybook",
+      "backend": "Lambda関数作成 → ユニットテスト → 統合テスト"
+    },
+    "modify_existing_feature": {
+      "approach": "既存テストを確認し、必要に応じて更新",
+      "testing": "回帰テストの実行",
+      "documentation": "変更内容をドキュメントに反映"
+    },
+    "fix_bugs": {
+      "diagnosis": "再現テストを先に作成",
+      "approach": "根本原因の分析後に修正",
+      "validation": "修正が他の機能に影響しないことを確認"
+    }
+  },
+  
+  "aws_integration": {
+    "services": {
+      "cognito": "ユーザー認証・認可",
+      "dynamodb": "ユーザーデータ・音声メタデータ",
+      "s3": "音声ファイルストレージ",
+      "lambda": "APIビジネスロジック",
+      "cloudfront": "静的コンテンツ配信"
+    },
+    "security": {
+      "iam": "最小権限の原則",
+      "secrets": "AWS Secrets Manager使用",
+      "cors": "適切なCORS設定",
+      "https": "すべての通信をHTTPS化"
+    }
+  },
+  
+  "testing_strategy": {
+    "unit_tests": "Jest for all business logic",
+    "integration_tests": "API endpoints and AWS services",
+    "e2e_tests": "Critical user journeys with Playwright",
+    "manual_testing": "ローカル開発環境での動作確認"
+  }
+} 
