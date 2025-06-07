@@ -63,12 +63,12 @@ careerfm/
 ├── infrastructure/      # AWS CDK インフラコード
 │   ├── lib/
 │   │   └── stacks/     # CDKスタック定義
-│   └── bin/            # CDKアプリケーション
+│   ├── bin/            # CDKアプリケーション
+│   └── test/           # インフラ用テストコード
 ├── packages/
-│   ├── frontend/       # Next.js フロントエンド
-│   └── backend/        # Lambda関数
+│   └── frontend/       # Next.js フロントエンド
 ├── docs/               # ドキュメント
-├── tests/              # テストコード
+├── decisions/          # 意思決定記録
 └── scripts/            # ユーティリティスクリプト
 ```
 
