@@ -58,9 +58,7 @@ export class StorageStack extends Stack {
         : dynamodb.BillingMode.PROVISIONED,
       readCapacity: props.stage === 'prod' ? undefined : 5,
       writeCapacity: props.stage === 'prod' ? undefined : 5,
-      pointInTimeRecoverySpecification: {
-        pointInTimeRecoveryEnabled: props.stage === 'prod',
-      },
+      pointInTimeRecovery: props.stage === 'prod',
       removalPolicy: props.stage === 'prod' 
         ? cdk.RemovalPolicy.RETAIN 
         : cdk.RemovalPolicy.DESTROY,
