@@ -130,4 +130,4 @@ Career.fm は、他己紹介風の「音声名刺」を手軽に生成・共有�
 - PRD：Product Requirement Document  
 - MVP：Minimum Viable Product  
 - TTS：Text-to-Speech  
-- OGP：Open Graph Protocol  
+- OGP：Open Graph Protocol
